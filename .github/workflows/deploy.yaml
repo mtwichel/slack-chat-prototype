@@ -25,6 +25,10 @@ jobs:
       - name: Install Dart Frog CLI
         run: dart pub global activate dart_frog_cli
 
+      - name: Make Slack Secret File
+        run: echo "const token = '${{ secrets.SLACK_ACCESS_TOKEN }}';" > lib/slack_token.dart
+        working-directory: api
+
       - name: Get Packages
         run: dart pub get
         working-directory: api

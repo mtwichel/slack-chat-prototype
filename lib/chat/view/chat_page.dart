@@ -74,7 +74,7 @@ class ChatView extends StatelessWidget {
                                     : Colors.blueGrey.shade300,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Text(
+                              child: SelectableText(
                                 message.content,
                                 style: const TextStyle(color: Colors.white),
                               ),

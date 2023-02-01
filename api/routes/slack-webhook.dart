@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:api/message.dart';
 import 'package:api/message_stream.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -14,12 +12,17 @@ Future<Response> onRequest(RequestContext context) async {
     case 'url_verification':
       final challenge = requestBody['challenge'] as String;
       return Response.json(body: {'challenge': challenge});
+    case 'event_callback':
+      final event = Map<String, dynamic>.from(requestBody['event'] as Map);
+      if (event['type'] == 'message' || event['type'] == 'app_mention') {
+        final message = Message(
+          content: event['text'] as String,
+          senderId: 'slack',
+          sentAt: DateTime.now().millisecondsSinceEpoch,
+        );
+        addMessage(message);
+      }
   }
-  final message = Message(
-    content: jsonEncode(requestBody),
-    senderId: 'slack',
-    sentAt: DateTime.now().millisecondsSinceEpoch,
-  );
-  addMessage(message);
+
   return Response();
 }
