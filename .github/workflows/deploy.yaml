@@ -1,0 +1,42 @@
+name: deploy
+
+on:
+  push:
+    branches: main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Authorize Docker
+        run: doctl registry login
+
+      - name: Install Dart
+        run: dart-lang/setup-dart@v1
+
+      - name: Install Dart Frog CLI
+        run: dart pub global activate dart_frog_cli
+
+      - name: Get Packages
+        run: dart pub get
+        working-directory: api
+
+      - name: Dart Frog Build
+        run: dart_frog Build
+        working-directory: api
+
+      - name: Build Docker Image
+        run: docker build build --tag registry.digitalocean.com/testing-123/slack-chat
+        working-directory: api
+
+      - name: Push Docker Image
+        run: docker push registry.digitalocean.com/testing-123/slack-chat
+        working-directory: api
