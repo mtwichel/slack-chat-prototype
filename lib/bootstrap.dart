@@ -30,7 +30,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     () async => runApp(
       RepositoryProvider(
         create: (context) => ChatRepository(
-          uri: 'wss://slack-chat-94efp.ondigitalocean.app/chat',
+          host: 'slack-chat-94efp.ondigitalocean.app',
         )..init(),
         child: await builder(),
       ),

@@ -7,18 +7,21 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart';
 
 Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
-  messagesStream.listen(
+  messagesStreamController.stream.listen(
     (event) {
-      post(
-        Uri.parse('https://slack.com/api/chat.postMessage'),
-        body: jsonEncode(
-          {'channel': 'C04MH8BCMNE', 'text': 'Hello world :tada:'},
-        ),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-      );
+      messages.add(event);
+      if (event.senderId == 'client') {
+        post(
+          Uri.parse('https://slack.com/api/chat.postMessage'),
+          body: jsonEncode(
+            {'channel': 'C04MH8BCMNE', 'text': event.content},
+          ),
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer $token'
+          },
+        );
+      }
     },
   );
   // 1. Execute any custom code prior to starting the server...

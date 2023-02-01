@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chat_repository/chat_repository.dart';
+import 'package:http/http.dart';
 import 'package:web_socket_client/web_socket_client.dart';
 
 /// {@template chat_repository}
@@ -10,17 +11,17 @@ import 'package:web_socket_client/web_socket_client.dart';
 class ChatRepository {
   /// {@macro chat_repository}
   ChatRepository({
-    required this.uri,
-  }) : socket = WebSocket(Uri.parse(uri));
+    required this.host,
+  }) : socket = WebSocket(Uri.parse('wss://$host/chat'));
 
-  final String uri;
+  final String host;
   final WebSocket socket;
 
   Future<void> init() async {
     await socket.connection.firstWhere((state) => state is Connected);
   }
 
-  Stream<Message> get messages => socket.messages.map((e) {
+  Stream<Message> get messageStream => socket.messages.map((e) {
         final json = Map<String, dynamic>.from(jsonDecode('$e') as Map);
         return Message.fromJson(json);
       });
@@ -32,6 +33,14 @@ class ChatRepository {
       sentAt: DateTime.now().millisecondsSinceEpoch,
     ).toJson();
     socket.send(jsonEncode(json));
+  }
+
+  Future<List<Message>> getMessages() async {
+    final response = await get(Uri.parse('https://$host/messages'));
+    final body = Map<String, dynamic>.from(jsonDecode(response.body) as Map);
+    return (body['messages'] as List)
+        .map((e) => Message.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
   }
 
   void close() {

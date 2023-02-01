@@ -8,6 +8,6 @@ Future<Response> onRequest(RequestContext context) async {
     senderId: 'slack',
     sentAt: DateTime.now().millisecondsSinceEpoch,
   );
-  addMessage(message);
+  messagesStreamController.add(message);
   return Response();
 }
