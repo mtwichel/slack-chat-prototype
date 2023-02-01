@@ -20,7 +20,7 @@ jobs:
         run: doctl registry login
 
       - name: Install Dart
-        run: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@v1
 
       - name: Install Dart Frog CLI
         run: dart pub global activate dart_frog_cli
