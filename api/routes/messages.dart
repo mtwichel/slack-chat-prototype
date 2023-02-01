@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:api/message_stream.dart';
@@ -10,6 +9,6 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   return Response.json(
-    body: jsonEncode({'messages': messages.map((e) => e.toJson()).toList()}),
+    body: {'messages': messages.map((e) => e.toJson()).toList()},
   );
 }

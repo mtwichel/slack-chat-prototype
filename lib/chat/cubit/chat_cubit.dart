@@ -14,7 +14,9 @@ class ChatCubit extends Cubit<ChatState> {
   final ChatRepository chatRepository;
   StreamSubscription<Message>? subscription;
 
-  void init() {
+  Future<void> init() async {
+    final initialMessages = await chatRepository.getMessages();
+    emit(state.copyWith(messages: initialMessages));
     subscription = chatRepository.messageStream.listen((event) {
       emit(
         state.copyWith(
