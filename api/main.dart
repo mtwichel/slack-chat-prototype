@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:api/message_stream.dart';
-import 'package:api/slack_token.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart';
 
@@ -18,7 +17,8 @@ Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
           ),
           headers: {
             'Content-type': 'application/json',
-            'Authorization': 'Bearer $token'
+            'Authorization':
+                'Bearer ${const String.fromEnvironment('SLACK_ACCESS_TOKEN')}'
           },
         );
       }

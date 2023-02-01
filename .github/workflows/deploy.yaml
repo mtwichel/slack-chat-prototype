@@ -19,15 +19,16 @@ jobs:
       - name: Authorize Docker
         run: doctl registry login
 
-      - name: Install Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
 
       - name: Install Dart Frog CLI
         run: dart pub global activate dart_frog_cli
 
-      - name: Make Slack Secret File
-        run: echo "const token = '${{ secrets.SLACK_ACCESS_TOKEN }}';" > lib/slack_token.dart
-        working-directory: api
+      - name: Build Flutter App
+        run: flutter build web -o api/public --release -t lib/main_development.dart
 
       - name: Get Packages
         run: dart pub get

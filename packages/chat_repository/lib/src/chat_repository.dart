@@ -12,7 +12,7 @@ class ChatRepository {
   /// {@macro chat_repository}
   ChatRepository({
     required this.host,
-  }) : socket = WebSocket(Uri.parse('wss://$host/chat'));
+  }) : socket = WebSocket(Uri.parse('wss://$host/api/chat'));
 
   final String host;
   final WebSocket socket;
@@ -36,7 +36,7 @@ class ChatRepository {
   }
 
   Future<List<Message>> getMessages() async {
-    final response = await get(Uri.parse('https://$host/messages'));
+    final response = await get(Uri.parse('https://$host/api/messages'));
     final body = Map<String, dynamic>.from(jsonDecode(response.body) as Map);
     return (body['messages'] as List)
         .map((e) => Message.fromJson(Map<String, dynamic>.from(e as Map)))
