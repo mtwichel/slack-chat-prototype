@@ -6,6 +6,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart';
 
 Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
+  print(Platform.environment['SLACK_ACCESS_TOKEN']);
   messagesStreamController.stream.listen(
     (event) {
       messages.add(event);
@@ -18,7 +19,7 @@ Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
           headers: {
             'Content-type': 'application/json',
             'Authorization':
-                'Bearer ${const String.fromEnvironment('SLACK_ACCESS_TOKEN')}'
+                'Bearer ${Platform.environment['SLACK_ACCESS_TOKEN']}'
           },
         );
       }
