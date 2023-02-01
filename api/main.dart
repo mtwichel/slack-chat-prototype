@@ -6,7 +6,6 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart';
 
 Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
-  print(Platform.environment['SLACK_ACCESS_TOKEN']);
   messagesStreamController.stream.listen(
     (event) {
       messages.add(event);

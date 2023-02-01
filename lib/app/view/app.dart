@@ -14,6 +14,7 @@ class App extends StatelessWidget {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
+      title: 'Slack Support Chat',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const ChatPage(),
