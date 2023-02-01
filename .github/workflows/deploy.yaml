@@ -30,7 +30,7 @@ jobs:
         working-directory: api
 
       - name: Dart Frog Build
-        run: dart_frog Build
+        run: dart_frog build
         working-directory: api
 
       - name: Build Docker Image
