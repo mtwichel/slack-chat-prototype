@@ -18,7 +18,7 @@ class ChatRepository {
   final WebSocket socket;
 
   Future<void> init() async {
-    await socket.connection.firstWhere((state) => state is Connected);
+    socket.connection.listen(print);
   }
 
   Stream<Message> get messageStream => socket.messages.map((e) {
