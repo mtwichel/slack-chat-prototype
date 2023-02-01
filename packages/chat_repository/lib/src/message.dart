@@ -11,19 +11,19 @@ class Message extends Equatable {
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       content: json['content'] as String,
-      sentAt: DateTime.parse(json['sent_at'] as String),
+      sentAt: json['sent_at'] as int,
       senderId: json['sender_id'] as String,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'content': content,
-        'sent_at': sentAt.toIso8601String(),
+        'sent_at': sentAt,
         'sender_id': senderId,
       };
 
   final String content;
-  final DateTime sentAt;
+  final int sentAt;
   final String senderId;
 
   @override

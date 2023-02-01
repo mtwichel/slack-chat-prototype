@@ -26,9 +26,11 @@ class ChatRepository {
       });
 
   void sendMessage(String message) {
-    final json =
-        Message(content: message, senderId: 'client', sentAt: DateTime.now())
-            .toJson();
+    final json = Message(
+      content: message,
+      senderId: 'client',
+      sentAt: DateTime.now().millisecondsSinceEpoch,
+    ).toJson();
     socket.send(jsonEncode(json));
   }
 

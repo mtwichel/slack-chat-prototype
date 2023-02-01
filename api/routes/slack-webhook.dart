@@ -18,7 +18,7 @@ Future<Response> onRequest(RequestContext context) async {
   final message = Message(
     content: jsonEncode(requestBody),
     senderId: 'slack',
-    sentAt: DateTime.now(),
+    sentAt: DateTime.now().millisecondsSinceEpoch,
   );
   addMessage(message);
   return Response();
