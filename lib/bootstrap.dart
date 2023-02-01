@@ -29,8 +29,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await runZonedGuarded(
     () async => runApp(
       RepositoryProvider(
-        create: (context) =>
-            ChatRepository(uri: 'ws://localhost:8080/chat')..init(),
+        create: (context) => ChatRepository(
+          uri: 'wss://slack-chat-94efp.ondigitalocean.app/chat',
+        )..init(),
         child: await builder(),
       ),
     ),
