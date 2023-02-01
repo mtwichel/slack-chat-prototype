@@ -14,6 +14,10 @@ Future<Response> onRequest(RequestContext context) async {
       return Response.json(body: {'challenge': challenge});
     case 'event_callback':
       final event = Map<String, dynamic>.from(requestBody['event'] as Map);
+
+      if (event['user'] == 'U04MVN0K16D') {
+        return Response();
+      }
       if (event['type'] == 'message' || event['type'] == 'app_mention') {
         final message = Message(
           content: event['text'] as String,
