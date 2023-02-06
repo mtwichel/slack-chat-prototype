@@ -8,7 +8,7 @@ environment:
   flutter: 3.3.10
 
 dependencies:
-  bloc: ^8.1.0
+  bloc: ^8.1.1
   chat_repository:
     path: packages/chat_repository
   equatable: ^2.0.5
