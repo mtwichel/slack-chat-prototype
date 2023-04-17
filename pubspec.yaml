@@ -17,7 +17,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
-  gap: ^2.0.1
+  gap: ^2.0.2
   intl: ^0.17.0
 
 dev_dependencies:
